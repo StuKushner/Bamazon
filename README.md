@@ -4,5 +4,4 @@ An Amazon-like storefront using MySQL. It takes in orders from customers and dep
 
 # What Was Used
 
-MySQL
-Node.js
+MySQL, Node.js
