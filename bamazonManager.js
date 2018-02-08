@@ -1,21 +1,27 @@
+// Initialize npm packages used
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
+// Uses the connection variable to connect to a MySQL Database
 var connection = mysql.createConnection({
 	host: "localhost",
 	port: 3306,
 
+	// Username
 	user: "root",
 
+	// Password
 	password: "",
 	database: "bamazon_DB"
 });
 
+// If connection is successful, load the menu
 connection.connect(function(err){
 	if (err) throw err;
 	runSearch();
 });
 
+// Load the manager options and pass in the products data from the database
 function runSearch() {
 	inquirer.prompt({
 		name: "action",
@@ -49,6 +55,7 @@ function runSearch() {
 	});
 }
 
+// Get all product data from the database
 function productsForSale() {
 	var query = "SELECT * FROM products HAVING stock_quantity > 0";
 	connection.query(query, function(err, res){
@@ -60,6 +67,7 @@ function productsForSale() {
 	});
 }
 
+// Check all of the products with less than 5 items
 function lowInventory() {
 	var query = "SELECT * FROM products HAVING stock_quantity < 5";
 	connection.query(query, function(err, res){
@@ -71,6 +79,7 @@ function lowInventory() {
 	});
 }
 
+// Add an item to the inventory
 function addToInventory() {
 	inquirer.prompt([
 		{
@@ -115,6 +124,7 @@ function addToInventory() {
 	});
 }
 
+// Add a new product to the store
 function addNewProduct() {
 	inquirer.prompt([
 		{
